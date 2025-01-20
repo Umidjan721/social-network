@@ -4,13 +4,13 @@
   grid-template-columns: minmax(300px, 360px) auto minmax(300px, 360px);
   gap: 30px;
 
-  .LeftSide {
-    grid-area: L;
+  // .LeftSide {
+  //   grid-area: L;
 
-    .Navbar {
-      margin-bottom: 20px;
-    }
-  }
+  //   .Navbar {
+  //     margin-bottom: 20px;
+  //   }
+  // }
 
   .Main {
     grid-area: M;
