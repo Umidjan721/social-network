@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../utils/baseUrl";
-
-interface IRegisterUserPayload {
+export interface IRegisterUserPayload {
   name: string,
   email: string,
   phone_number: string,
   password: string,
   user_city: string
 }
+
 interface IRegisterUserResponse {
   status: number;
   user_id: number;
@@ -17,7 +17,6 @@ interface ILoginUserPayload {
   password: string,
 }
 interface ILoginUserResponse extends IRegisterUserResponse { }
-
 
 
 export const authApi = createApi({

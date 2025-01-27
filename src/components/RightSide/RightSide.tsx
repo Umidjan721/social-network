@@ -1,42 +1,8 @@
-import { AppInput } from "../../components/UI/AppInput/AppInput";
-import { List } from "../../components/List/List";
-import { Navbar } from "../../components/Navbar/Navbar";
-import { Header } from "../../components/UI/Header/Header";
-import "./MainPage.scss";
-import { Post } from "../../components/Post/Post";
-import { useState } from "react";
-import { useGetAllPostsQuery } from "../../store/API/postApi";
-import { WhatsNew } from "../../components/WhatsNew/WhatsNew";
-import { History } from "../../components/History/History";
-import { PostRepost } from "../../components/PostRepost/PostRepost";
 
-export const MainPage = () => {
-  const [liked, setLiked] = useState(false);
-  const {data} = useGetAllPostsQuery(null);
 
-  return (
-   <>
-<Header/>
- <div className="MainPage">
-      <aside className="LeftSide">
-        <Navbar/>
-        <List/>
-      </aside>
-      <main className="Main">
-        <WhatsNew/>
-        <History/>
-        {data?.message.length && data.message.map((elem: any) =>(
-           <Post 
-           postText={elem.main__text} 
-           regDate={elem.reg_date} 
-           userName={elem.user_fk.name}
-           isLiked={liked}
-           isMarked={false}
-           likeClick={() => setLiked(!liked)}/>
-        ))}
-        <PostRepost/>
-      </main>
-      <aside className="RightSide">
+export const RightSide = () => {
+    return(
+        <aside className="RightSide">
         <div className="List">
           <div className="List__title">
             <h2>Близкие друзья</h2>
@@ -122,7 +88,5 @@ export const MainPage = () => {
           </div>
         </div>
       </aside>
-     </div>
-</>
-  );
-};
+    )
+}

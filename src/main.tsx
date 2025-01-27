@@ -5,7 +5,7 @@ import "./styles/base.scss"
 import { theme } from './themes/theme.ts'
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from './themes/globalStyle.ts'
-import { store } from './store/API/store.ts'
+import { store } from './store/store.ts'
 import { Provider } from 'react-redux'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -8,17 +8,26 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {  Controller } from "react-hook-form"
 import { useLoginUserMutation } from "../../store/API/authApi";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store"
+import { useEffect } from "react";
 
 const AuthFormScheme = yup.object({
   userEmail: yup.string().email().min(4).max(30).required(),
   userPassword: yup.string().min(6).max(30).required(),
 })
 
+interface ILoginForm{
+  userEmail:string;
+  userPassword:string;
+}
+
 export const LoginPage = () => {
-  interface ILoginForm{
-    userEmail:string;
-    userPassword:string;
-  }
+ const navigate = useNavigate();
+ const user = useSelector((state: RootState)=> state.user.user)
+ console.log(user);
+ 
   const {
     control,
     handleSubmit, 
@@ -26,8 +35,8 @@ export const LoginPage = () => {
   } = useForm<ILoginForm>({
     resolver: yupResolver(AuthFormScheme),
     defaultValues: {
-      userEmail: "",
-      userPassword: "",
+      userEmail: `${user?.email ? user.email:""}`,
+      userPassword: `${user?.password ? user.password: ""}`,
     },
   });
   const [loginUser, {data: userData}] = useLoginUserMutation();
@@ -35,21 +44,33 @@ export const LoginPage = () => {
   const formData: SubmitHandler<ILoginForm> = (data) =>{
     const payload = {
       email: data.userEmail,
-      password: data.userPassword
+      password: data.userPassword,
     };
     loginUser(payload);
   };
 
+  useEffect(()=>{
+    if (userData?.user_id){
+      navigate("/main-page");
+    }
+  }, [userData]);
+
   return (
     <div className="LoginPage">
       <h1>Авторизация</h1>
-      <form action="#" onSubmit={handleSubmit(formData)}>
-        <Controller control={control} name="userEmail" render={({field}) => (
+      <form onSubmit={handleSubmit(formData)}>
+        <Controller 
+        control={control} 
+        name="userEmail" 
+        render={({field}) => (
           <AppInput 
           inputPlaceholder="ваша почта" 
-          inputType="email" {...field} 
-          isError={errors.userEmail ? true : false} 
-          errorText={errors.userEmail ?.message}/>
+          inputType="email" 
+          inputValue={field.value}
+          onChange={field.onChange}
+          isError={Boolean(errors.userEmail)} 
+          errorText={errors.userEmail?.message}
+          />
         )}
         />
         <Controller 
@@ -58,15 +79,21 @@ export const LoginPage = () => {
         render={({ field })=>(
           <AppInput 
           inputPlaceholder="пароль" 
-          inputType="password" {...field} 
-          isError={errors.userPassword ? true : false} 
+          inputType="password"
+          inputValue={field.value}
+          onChange={field.onChange}
+          isError={Boolean(errors.userPassword)} 
           errorText={errors.userPassword?.message}/>
         )}
         />
-        <AppButton buttonText="Войти" buttonType="button" isDisabled={false}/>
+        <AppButton 
+        buttonText="Войти" 
+        buttonType="submit" 
+        isDisabled={false}
+        />
       </form>
       <AppLink href="#" linkText="Забыли пароль?"/>
-      <IconWrapper regLink="#"/>
+      <IconWrapper regLink="./register-page"/>
     </div>
   );
 };

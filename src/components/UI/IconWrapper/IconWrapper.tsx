@@ -1,11 +1,11 @@
-import { RegistrationText } from "../../RegistrationText/RegistrationText";
+import { Link } from "react-router-dom";
 type TIconWrapper = {regLink:string}
 
 export const IconWrapper = ({regLink,}:TIconWrapper) => {
     return(
         <div className="registration">
         <span>
-          У вас нет аккаунта? <RegistrationText href="#" linkText="Зарегистрироваться"/>
+          У вас нет аккаунта? <Link to={regLink}>Зарегистрироваться</Link>
         </span>
         <p>Войти с помощью</p>
         <div className="icons-wrapper">

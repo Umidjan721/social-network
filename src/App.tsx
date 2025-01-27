@@ -3,6 +3,7 @@ import { MainPage } from "./pages/MainPage/MainPage";
 import { ProfilePage } from "./pages/ProfilePage/ProfilePage";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import { Scontainer } from "./themes/Container.style";
+import { RegistrationPage } from "./components/RegistrationPage/RegistrationPage";
 
 function App() {
   const routerConfig = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
     {
       path:"/profile-page",
       element:<ProfilePage/>
+    },
+    {
+      path:"/register-page",
+      element:<RegistrationPage/>
     },
   ])
   return (
