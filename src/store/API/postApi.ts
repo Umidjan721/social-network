@@ -30,6 +30,27 @@ interface IGetPostByIdResponse{
     message: IPost;
 }
 
+interface IAddNewPostPayload{
+    user_id:number;
+    main_text: string;
+}
+interface IAddNewPostResponse{
+    status: number;
+    post_id: number;
+}
+
+interface IEditPostPayload {
+    post_id: number;
+    new_text: string;
+}
+
+interface IEditPostResponse {
+    status: number;
+    message: string;
+}
+
+interface IDeletePostResponse extends IEditPostResponse {}
+
 export const postApi = createApi({
     reducerPath:"postApi",
     baseQuery: fetchBaseQuery({baseUrl}),
@@ -40,11 +61,35 @@ export const postApi = createApi({
        getPostById: builder.query<IGetPostByIdResponse, string>({
         query:(postId)=> `/post?post_id=${postId}`,
        }),
+       addNewPost: builder.mutation<IAddNewPostResponse, IAddNewPostPayload>({
+        query: (payload) => ({
+            url: "/post",
+            method: "POST",
+            body: payload,
+        }),
+       }),
+       deletePOST: builder.mutation<IDeletePostResponse,number>({
+            query:(payload) => ({
+                url: "/post",
+                method: "DELETE",
+                body: payload,
+            }),
+       }),
+       editPOST: builder.mutation<IEditPostResponse, IEditPostPayload >({
+            query:(payload) => ({
+                url: "/post",
+                method: "PUT",
+                body: payload,
+            }),
+       }),
     }),
 });
 
 export const {
     useGetAllPostsQuery, 
     useLazyGetAllPostsQuery, 
-    useLazyGetPostByIdQuery
+    useLazyGetPostByIdQuery,
+    useAddNewPostMutation,
+    useEditPOSTMutation,
+    useDeletePOSTMutation,
 } = postApi;

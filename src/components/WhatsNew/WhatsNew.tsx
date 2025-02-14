@@ -1,3 +1,4 @@
+import { AddNewPost } from "../../pages/PostPage/AddNewPost"
 import { AppInput } from "../UI/AppInput/AppInput"
 
 export const WhatsNew = () =>{
@@ -44,5 +45,6 @@ export const WhatsNew = () =>{
                     </svg>
                   </div>
                 </div>
+                <AddNewPost isOpen
     )
 }

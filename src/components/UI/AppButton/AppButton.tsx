@@ -3,7 +3,7 @@ import { SAppButoon } from "./AppButton.style";
 type TAppButton={
     buttonText: string;
     buttonType: "button" | "submit";
-    buttonClick?: ()=>{};
+    buttonClick?: ()=> void;
     isDisabled: boolean;
 };
 

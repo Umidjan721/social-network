@@ -4,16 +4,18 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import { Header } from "../../components/UI/Header/Header";
 import "./MainPage.scss";
 import { Post } from "../../components/Post/Post";
-import { useState } from "react";
-import { useGetAllPostsQuery } from "../../store/API/postApi";
+import { useEffect, useState } from "react";
+import { useLazyGetAllPostsQuery } from "../../store/API/postApi";
 import { WhatsNew } from "../../components/WhatsNew/WhatsNew";
 import { History } from "../../components/History/History";
 import { PostRepost } from "../../components/PostRepost/PostRepost";
 
 export const MainPage = () => {
   const [liked, setLiked] = useState(false);
-  const {data} = useGetAllPostsQuery(null);
-
+  const [fetchTrigger, {data}] = useLazyGetAllPostsQuery();
+  useEffect(() => {
+    fetchTrigger(null);
+  }, [data]);
   return (
    <>
 <Header/>
@@ -25,7 +27,7 @@ export const MainPage = () => {
       <main className="Main">
         <WhatsNew/>
         <History/>
-        {data?.message.length && data.message.map((elem: any) =>(
+        {!!data?.message.length && [...data.message].reverse().map((elem) =>(
            <Post 
            postText={elem.main__text} 
            regDate={elem.reg_date} 

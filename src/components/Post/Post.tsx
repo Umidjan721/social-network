@@ -1,11 +1,13 @@
+
 import { useState } from "react";
 import { SPost } from "./Post.style"
+import { PostSetting } from "./PostSetting";
 
 
 interface IPostProps {
-  isLiked: boolean;
-  isMarked: boolean;
-  likeClick:()=>void;
+  isLiked?: boolean;
+  isMarked?: boolean;
+  likeClick?:()=>void;
   userName:string;
   regDate: string;
   postText: string;
@@ -13,6 +15,7 @@ interface IPostProps {
 
 export const Post = ({isLiked, isMarked, likeClick, postText, regDate, userName}: IPostProps)=> {
   // const[liked, setLiked]= useState(false)
+  const [isSettingStatus, setIsSettingStatus ] = useState<boolean>(false);
     return(
         <SPost $isLiked={isLiked} $isMarked={isMarked}>
         <div className="UserElem">
@@ -138,6 +141,7 @@ export const Post = ({isLiked, isMarked, likeClick, postText, regDate, userName}
           className="icon icon-more"
           viewBox="0 0 25 5"
           xmlns="http://www.w3.org/2000/svg"
+          onClick={()=> setIsSettingStatus(!isSettingStatus)}
         >
           <g id="more">
             <circle id="ellipse" cx="22.5" cy="2.5" r="2.5" />
@@ -145,6 +149,7 @@ export const Post = ({isLiked, isMarked, likeClick, postText, regDate, userName}
             <circle id="ellipse_3" cx="2.5" cy="2.5" r="2.5" />
           </g>
         </svg>
+        {isSettingStatus && <PostSetting/>}
       </SPost>
     )
 }

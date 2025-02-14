@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
 interface SPostProps{
-    $isLiked:Boolean;
-    $isMarked:Boolean;
+    $isLiked?:Boolean;
+    $isMarked?:Boolean;
 }
 
 export const SPost = styled.div<SPostProps>`
@@ -41,4 +41,29 @@ export const SPost = styled.div<SPostProps>`
   &__text {
     margin-bottom: 20px;
   }
-`
+`;
+
+export const SPostSetting = styled.div`
+position: absolute;
+top: -46px;
+right: 0;
+display: flex;
+gap: 0 20px;
+padding: 8px 12px;
+border-radius: 8px;
+background-color: #fff;
+border: 1px solid ${props=>props.theme.color.gray};
+span{
+  font-size: 16px;
+  color: ${(props) => props.theme.color.blue};
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: all .3s;
+  &:hover {
+    color: white;
+    background-color: orange;
+    text-shadow: #fff;
+  }
+}
+`;

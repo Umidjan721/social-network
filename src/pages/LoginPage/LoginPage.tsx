@@ -52,6 +52,7 @@ export const LoginPage = () => {
   useEffect(()=>{
     if (userData?.user_id){
       navigate("/main-page");
+      localStorage.setItem("userLoginData" , JSON.stringify(userData.user_id));
     }
   }, [userData]);
 
